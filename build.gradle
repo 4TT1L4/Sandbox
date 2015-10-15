@@ -35,7 +35,7 @@ task wrapper(type: Wrapper) {
 sourceSets {
     test {
         java {
-            srcDirs = ["src/HelloWorld"]
+            srcDirs = ["src/Sandbox"]
         }
     }
 }
