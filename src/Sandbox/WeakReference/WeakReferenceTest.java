@@ -63,8 +63,15 @@ public class WeakReferenceTest{
         {
             list.add(new A("A instance:" + i));
         }
-                
-        // The only non-weak reference had been removed. The first A instance should be already Garbage Collected.
+        
+        //The only non-weak reference had been removed. The first A instance should be already Garbage Collected.
+        
+        // 1.:
+        // The get() method of the WeakReference returns null if the instance had been Garbage Collected.
+        Assert.assertTrue(r.get() == null);
+        
+        // 2.:
+        // We can also get the reference for the Garbage Collected instances from the ReferenceQueue.
         hadBeenGabargeCollected = testForGarbageCollection(this.referenceQueue.poll());
         Assert.assertTrue(hadBeenGabargeCollected);
     }
