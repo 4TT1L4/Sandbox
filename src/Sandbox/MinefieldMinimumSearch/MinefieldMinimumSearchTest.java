@@ -5,7 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 /**
- * Tests the path 
+ * Tests the search implementation.
  * 
  * @author Attila
  */
