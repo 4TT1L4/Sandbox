@@ -15,7 +15,7 @@ import MinefueldMinimumSearch.strategy.Bruteforce;
 import MinefueldMinimumSearch.strategy.DynamicProgramming;
 
 /**
- * Tests the path 
+ * Tests the search implementation.
  * 
  * @author Attila
  */
