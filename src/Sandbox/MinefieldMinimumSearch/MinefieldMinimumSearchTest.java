@@ -2,15 +2,38 @@ package MinefieldMinimumSearch;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import org.junit.runners.Parameterized.Parameter;
+import org.junit.runners.Parameterized.Parameters;
+
+import MinefueldMinimumSearch.strategy.Bruteforce;
+import MinefueldMinimumSearch.strategy.DynamicProgramming;
 
 /**
  * Tests the path 
  * 
  * @author Attila
  */
+@RunWith(Parameterized.class)
 public class MinefieldMinimumSearchTest {
 
+    @Parameters
+    public static Collection<Object[]> data() {
+        return Arrays.asList(new Object[][] {
+            { new MinefieldOptimalPathFinder(new Bruteforce()) },
+            { new MinefieldOptimalPathFinder(new DynamicProgramming()) },  
+           });
+    }
+
+    @Parameter
+    public MinefieldOptimalPathFinder pathFinder;
+    
+    
     /**
      * Test case:
      * - 4 x 4,
@@ -27,7 +50,6 @@ public class MinefieldMinimumSearchTest {
     public void test_smallMinefieldWithoutMines_correctPathIsFound()
     {
         Minefield field = new Minefield(4, 4);
-        MinefieldOptimalPathFinder pathFinder = new MinefieldOptimalPathFinder();
         Path path = pathFinder.findOptimalPathFor(field);
         
         long lifesNeeded = path.getBombCount() + 1;
@@ -56,7 +78,6 @@ public class MinefieldMinimumSearchTest {
     public void test_8x8MinefieldWithoutMines_correctPathIsFound()
     {
         Minefield field = new Minefield(8, 8);
-        MinefieldOptimalPathFinder pathFinder = new MinefieldOptimalPathFinder();
         Path path = pathFinder.findOptimalPathFor(field);
         
         long lifesNeeded = path.getBombCount() + 1;
@@ -86,7 +107,6 @@ public class MinefieldMinimumSearchTest {
         field.get(1, 0).plantMine();
         field.get(0, 1).plantMine();
         
-        MinefieldOptimalPathFinder pathFinder = new MinefieldOptimalPathFinder();
         Path path = pathFinder.findOptimalPathFor(field);
         
         long lifesNeeded = path.getBombCount() + 1;
@@ -120,7 +140,6 @@ public class MinefieldMinimumSearchTest {
         field.get(6, 7).plantMine();
         field.get(7, 6).plantMine();
         
-        MinefieldOptimalPathFinder pathFinder = new MinefieldOptimalPathFinder();
         Path path = pathFinder.findOptimalPathFor(field);
         
         long lifesNeeded = path.getBombCount() + 1;
@@ -164,7 +183,6 @@ public class MinefieldMinimumSearchTest {
             }
         }
         
-        MinefieldOptimalPathFinder pathFinder = new MinefieldOptimalPathFinder();
         Path path = pathFinder.findOptimalPathFor(field);
         
         long lifesNeeded = path.getBombCount() + 1;
@@ -213,7 +231,6 @@ public class MinefieldMinimumSearchTest {
             }
         }
         
-        MinefieldOptimalPathFinder pathFinder = new MinefieldOptimalPathFinder();
         Path path = pathFinder.findOptimalPathFor(field);
         
         long lifesNeeded = path.getBombCount() + 1;
@@ -262,7 +279,6 @@ public class MinefieldMinimumSearchTest {
             }
         }
         
-        MinefieldOptimalPathFinder pathFinder = new MinefieldOptimalPathFinder();
         Path path = pathFinder.findOptimalPathFor(field);
         
         long lifesNeeded = path.getBombCount() + 1;
@@ -280,7 +296,48 @@ public class MinefieldMinimumSearchTest {
     {
         Minefield field = new Minefield(13, 13);
         
-        MinefieldOptimalPathFinder pathFinder = new MinefieldOptimalPathFinder();
+        Path path = pathFinder.findOptimalPathFor(field);
+        
+        long lifesNeeded = path.getBombCount() + 1;
+        assertEquals(1, lifesNeeded);
+    }
+    /**
+     * Test case:
+     * 
+     * Tests, if the computation finishes for a bigger maze as well.
+     */
+    @Test
+    public void test_mineFieldIsBigger_correctPathIsFoundFor130x130SizedMinefield()
+    {
+        if(pathFinder.getStrategy() instanceof Bruteforce)
+        {
+            // This is too complex task for the bruteforce searcher.
+            return;
+        }
+        
+        Minefield field = new Minefield(130, 130);
+        
+        Path path = pathFinder.findOptimalPathFor(field);
+        
+        long lifesNeeded = path.getBombCount() + 1;
+        assertEquals(1, lifesNeeded);
+    }
+    /**
+     * Test case:
+     * 
+     * Tests, if the computation finishes for a bigger maze as well.
+     */
+    @Test
+    public void test_mineFieldIsBigger_correctPathIsFoundFor1300x1300SizedMinefield()
+    {
+        if(pathFinder.getStrategy() instanceof Bruteforce)
+        {
+            // This is too complex task for the bruteforce searcher.
+            return;
+        }
+        
+        Minefield field = new Minefield(1300, 1300);
+        
         Path path = pathFinder.findOptimalPathFor(field);
         
         long lifesNeeded = path.getBombCount() + 1;
@@ -299,7 +356,6 @@ public class MinefieldMinimumSearchTest {
         field.get(0, 0).plantMine();
         field.get(3, 3).plantMine();
         
-        MinefieldOptimalPathFinder pathFinder = new MinefieldOptimalPathFinder();
         Path path = pathFinder.findOptimalPathFor(field);
         
         long lifesNeeded = path.getBombCount() + 1;

@@ -18,7 +18,12 @@ public class Path{
     {
         this.minefield = minefield;
     }
-
+    
+    public boolean contains(int coordX, int coordY)
+    {
+        return positions.stream().filter( pos -> pos.getXCoord() == coordX && pos.getYCoord() == coordY ).count() > 0;
+    }
+    
     /**
      * @return the number of mines on the Path in the Minefield passed in the constructor.
      */
@@ -42,6 +47,11 @@ public class Path{
         //       The positions next to each other in the path should be really next to each other in the Minefield.
         
         this.positions.add(new Position(coordX, coordY));
+    }
+    
+    public void add(Position position)
+    {
+        this.positions.add(position);
     }
     
     /**
